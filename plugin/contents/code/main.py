@@ -39,7 +39,7 @@ class AutoJumpRunner(plasmascript.Runner):
 
         #FIXME: Some versions of autojump use --complete instead
 
-        output = subprocess.call(['autojump', '--completion', 'q'],
+        output = subprocess.call(['autojump', '--completion', q],
                                  stdout=subprocess.PIPE)
 
         if output.returncode != 0:
