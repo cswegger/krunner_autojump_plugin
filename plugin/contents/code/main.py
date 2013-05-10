@@ -37,13 +37,16 @@ class AutoJumpRunner(plasmascript.Runner):
         # strip the keyword and leading space
         q = q.trimmed()
 
-        output = subprocess.Popen('autojump --completion %s' % q, 
-                                  shell=True, stdout=subprocess.PIPE).stdout
+        #FIXME: Some versions of autojump use --complete instead
 
-        # FIXME: This breaks in case autojump is not installed and the shell
-        # returns some error text
+        output = subprocess.call(['autojump', '--completion', 'q'],
+                                 stdout=subprocess.PIPE)
 
-        lines = output.readlines()
+        if output.returncode != 0:
+            # Error, bail out
+            return
+
+        lines = output.stdout.readlines()
 
         if not lines:
             return
